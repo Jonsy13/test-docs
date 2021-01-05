@@ -27,22 +27,12 @@ jobs:
       #     docker build -t ${GITHUB_REPOSITORY}:${{ steps.vars.outputs.branch }}-${{ steps.vars.outputs.sha_short }} .
       #     docker push ${GITHUB_REPOSITORY}:${{ steps.vars.outputs.branch }}-${{ steps.vars.outputs.sha_short }}
       
-      - name: Use Node.js 12.x
-        uses: actions/setup-node@v1
-        with:
-          node-version: 12.x
-      - run: |
-          cd website
-          npm install
-          npm run build
-
-      - name: Deploy to netlify
-        uses: netlify/actions/cli@master
+      - name: Publish to netlify
+        uses: netlify/actions/build@master
         env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-        with:
-          args: deploy --dir=website/build --prod
-          secrets: '["NETLIFY_AUTH_TOKEN", "NETLIFY_SITE_ID"]'
-          
+          NETLIFY_BASE: website
+          NETLIFY_CMD: npm run build
+          NETLIFY_DIR: website/build
 
