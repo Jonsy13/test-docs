@@ -1,7 +1,7 @@
 ---
 id: architecture
 title: Litmus Architecture
-sidebar_label: Architecture
+sidebar_label: Architec
 ---
 
 <hr/>
